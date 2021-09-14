@@ -1,0 +1,40 @@
+.inputs{
+    padding:0 15px;
+    display: flex;
+    height:56px;
+}
+.label{
+    min-width:150px;
+    height:32px;
+    line-height:32px;
+    flex-shrink: 0;
+    text-align:right;
+    box-sizing: border-box;
+    padding:0 15px;
+
+}
+.input-box{
+    height:56px;
+    display:flex;
+    flex-grow: 1;
+    flex-direction: column;
+
+}
+.input-item{
+    width:100%;
+    height:32px;
+    box-sizing: border-box;
+    border:1px solid #e0e0e0;
+    outline: none;
+    padding-left:15px;
+
+}
+.input-item:focus,.input-item:focus-visible{
+    border: 1px solid #1890ff;
+}
+.input-title{
+    height:22px;
+    line-height:22px;
+    color:red;
+    display:none;
+}

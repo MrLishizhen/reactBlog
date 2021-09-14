@@ -1,0 +1,50 @@
+const links = [{"id": 1, "name": "文章管理", "fid": 0, "icon": "el-icon-notebook-1", "routerUrl": "", "routerName": ""}, {
+    "id": 2,
+    "name": "网站管理",
+    "fid": 0,
+    "icon": "el-icon-s-tools",
+    "routerUrl": "",
+    "routerName": ""
+}, {"id": 3, "name": "用户管理", "fid": 0, "icon": "el-icon-user-solid", "routerUrl": "", "routerName": ""}, {
+    "id": 4,
+    "name": "随心贴",
+    "fid": 1,
+    "icon": "el-icon-first-aid-kit",
+    "routerUrl": "/Home/heart",
+    "routerName": "heart"
+}, {
+    "id": 5,
+    "name": "技术分享",
+    "fid": 1,
+    "icon": "el-icon-connection",
+    "routerUrl": "/Home/share",
+    "routerName": "share"
+}, {
+    "id": 6,
+    "name": "岁月年华",
+    "fid": 1,
+    "icon": "el-icon-date",
+    "routerUrl": "/Home/years",
+    "routerName": "years"
+}, {
+    "id": 7,
+    "name": "添加文章",
+    "fid": 1,
+    "icon": "el-icon-edit",
+    "routerUrl": "/Home/addArticle",
+    "routerName": "addArticle"
+}, {
+    "id": 8,
+    "name": "导航管理",
+    "fid": 2,
+    "icon": "el-icon-collection",
+    "routerUrl": "/Home/navAdministration",
+    "routerName": "navAdministration"
+}, {
+    "id": 9,
+    "name": "轮播图管理",
+    "fid": 2,
+    "icon": "el-icon-picture",
+    "routerUrl": "/Home/imgAdministration",
+    "routerName": "imgAdministration"
+}, {"id": 10, "name": "用户列表", "fid": 3, "icon": "el-icon-document", "routerUrl": "/Home/user", "routerName": "user"}]

@@ -1,0 +1,15 @@
+.empty-box{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.empty-title{
+
+}
+.empty-title-i{
+    text-align:center;
+    font-size:18px;
+    font-weight: bold;
+    line-height:24px;
+}
