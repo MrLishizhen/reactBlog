@@ -1,0 +1,13 @@
+
+.share-box{
+    display:flex;
+    flex-direction: column;
+}
+.ant-advanced-search-form{
+    height:112px;
+    flex-shrink: 0;
+}
+.table-box{
+    flex-grow: 1;
+    /*overflow:hidden;*/
+}

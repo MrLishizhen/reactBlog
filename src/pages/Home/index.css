@@ -95,6 +95,7 @@ main{
 }
 .rightMain{
     flex-grow: 1;
+    overflow:hidden;
     background-color: #fff;
 }
 .rightMain>div{
@@ -102,4 +103,5 @@ main{
     height:100%;
     /*display:flex;*/
     overflow:hidden;
+    padding:15px
 }
