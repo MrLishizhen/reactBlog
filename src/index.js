@@ -4,11 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
 
 ReactDOM.render(
     // <React.StrictMode> 在antd的menu中会出现ref错误，可以删掉
         <BrowserRouter>
+            <ConfigProvider locale={zhCN}>
             <App/>
+            </ConfigProvider>
         </BrowserRouter>
     // </React.StrictMode>,
     ,

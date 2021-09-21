@@ -4,17 +4,20 @@ import './index.css'
 
 /*
 * columns 表头
+* current 当前选中的分页数
 * scrollY 滚动区域//需要从父级来获取，一般只需要获取表格父集的高度就可以
 * pagination 是否展示自定义的分页 默认值false 表示需要后端分页
 * dataSource 表格数据
 * onChange 绑定的回调函数，在父集中返回三个参数当前页，获取数据的数量，表示是否切换了每页显示数量。
+* <>React.Fragment的简写，类似于vue的template
 * */
 export default class QyTable extends Component {
     // pageSize 变化的回调
     state = {
         defaultPageSize: 50,//默认每页展示的数据量
-        current: 1,//默认展示的数据内容
     }
+
+    //数据改变后调用父集onChange函数让父集处理数据
     onChange = (page, pageSize) => {
         const {onChange} = this.props;
         //表示是正常的切换表格页数
@@ -25,12 +28,17 @@ export default class QyTable extends Component {
 
         } else {
             //表示切换了每页显示的数量
-            this.setState({defaultPageSize: pageSize, current: 1}, () => {
+            this.setState({defaultPageSize: pageSize}, () => {
                 onChange(1, pageSize, true);
             })
 
         }
     }
+
+    componentDidMount() {
+
+    }
+
 
     render() {
         const {columns, data, pagination, scrollY} = this.props;
@@ -46,12 +54,12 @@ export default class QyTable extends Component {
             TabDom = (
                 <>
                     <div className={'table-top'}>
-                        <Table bordered columns={columns || []} scroll={{x: true, y: scrollY}}
+                        <Table bordered columns={columns || []}  scroll={{x: 1800, y: scrollY}}
                                pagination={pagination || false} dataSource={data || []}/>
                     </div>
                     <div className={'table-pagination'}>
-                        <Pagination total={data.length}
-                                    current={this.state.current}
+                        <Pagination total={this.props.total}
+                                    current={this.props.current}
                                     showSizeChanger
                                     onChange={this.onChange}
                                     showQuickJumper

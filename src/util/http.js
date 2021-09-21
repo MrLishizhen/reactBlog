@@ -96,9 +96,11 @@ Axios.interceptors.response.use(response=>{
             // console.log(1);
             needLoadingRequestCount=0;
             // response.data.message='权限验证失败，请重新登录'
-            message.error(response.data.message);
+            message.error('登录失效，请重新登录');
             //清除状态
-            removeLoading();
+            setTimeout(()=>{
+                removeLoading();
+            },1000)
         }else{
             return response.data;
         }

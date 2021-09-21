@@ -23,3 +23,17 @@ export function nav(){
         loading:false,
     });
 }
+
+//获取文章表格数据
+export function getTable(data){
+    return Axios({
+        url:'/admin/share/gettable',
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        data:data,
+        method:'POST',
+        loading:false,
+        GetShow: false
+    })
+}
