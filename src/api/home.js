@@ -37,3 +37,82 @@ export function getTable(data){
         GetShow: false
     })
 }
+//上传文章/addarticle
+export function addarticle(data){
+    return Axios({
+        url:'/admin_article/addarticle',
+        data:data,
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        method:'POST',
+        loading:false,
+        GetShow: false
+    });
+}
+
+export function uploadImge(data){
+    return Axios({
+        url:'/admin_article/addArticleImg',
+        data:data,
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        method:'POST',
+        loading:false,
+        GetShow: false
+    });
+}
+//删除文章
+export function deleteTable(data){
+    return Axios({
+        url:'/admin/share/deleteArticle',
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        data:data,
+        method:'POST',
+        loading:true,
+        GetShow: false
+    })
+}
+//展示或者显示文章
+export function setTableHot(data){
+    return Axios({
+        url:'/admin/share/setarticle_is',
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        data:data,
+        method:'POST',
+        loading:true,
+        GetShow: false
+    })
+}
+
+//获取文章详情编辑使用
+export function getDefault(data){
+    return Axios({
+        url:'/admin/share/getDefault',
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        data:data,
+        method:'POST',
+        loading:true,
+        GetShow: false
+    })
+}
+//修改文章
+export function setarticle(data){
+    return Axios({
+        url:'/admin_article/setarticle',
+        data:data,
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        method:'POST',
+        loading:false,
+        GetShow: false
+    });
+}

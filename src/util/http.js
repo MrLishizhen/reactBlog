@@ -31,12 +31,6 @@ function removeLoading(){
         if(document.getElementById('loading')){
             document.body.removeChild(document.getElementById('loading'))
         }
-
-    }
-    cookie.remove('userToken');
-    //判断是不是在登录页登录失败
-    if(window.location.pathname!=='/login'){
-        window.location.replace('/login');
     }
 }
 
@@ -97,13 +91,21 @@ Axios.interceptors.response.use(response=>{
             needLoadingRequestCount=0;
             // response.data.message='权限验证失败，请重新登录'
             message.error('登录失效，请重新登录');
+
             //清除状态
             setTimeout(()=>{
+
                 removeLoading();
+                cookie.remove('userToken');
+                //判断是不是在登录页登录失败
+                if(window.location.pathname!=='/login'){
+                    window.location.replace('/login');
+                }
+
             },1000)
-        }else{
-            return response.data;
+
         }
+        return response.data;
         // else if(response.data.status===199){
         //     Message.error(response.data.message);
         // }

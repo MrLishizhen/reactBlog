@@ -1,11 +1,11 @@
-.addArticle-box{
+.user-box{
     display:flex;
     flex-direction: column;
 }
 .ant-advanced-search-form{
-    height:112px;
+    /*height:56px;*/
     flex-shrink: 0;
 }
-.editor-box{
+.user{
     flex-grow: 1;
 }

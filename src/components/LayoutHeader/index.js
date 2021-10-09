@@ -1,26 +1,19 @@
 import React,{Component} from 'react';
 import logoImg from './img/logo.png'
-import {getUser} from '../../api/home'
-
-
-
 
 export default class Header extends Component{
-    getUserDefault=()=>{
-        getUser().then(res=>{
-            if(res.status===200){
-                sessionStorage.setItem('user',res.data);
-                this.setState({userName:res?.data.name});
-            }else{
-                this.props.history.replace('/login');
-            }
-        });
-    }
+
     state = {
         userName:'',
     }
+    getUser=()=>{
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        this.setState({
+            userName:user.name
+        })
+    }
     componentDidMount(){
-        this.getUserDefault();
+        this.getUser();
     }
 
     render(){
