@@ -88,28 +88,28 @@ export function deepClones(target) {
     return result;
 }
 //生成路由
-export function addRouters(data){
-    let arr = [];
-        let home= {
-            path:'/Home',
-            name:"Home",
-            component:layout,
-        }
-        home.children=[];
-        let routerLinks = data.filter(item=>item.routerName!='');
-
-        routerLinks.forEach((item,i)=>{
-            let data = {
-                path:item.routerName,
-                component:()=>import(`@/views/${item.routerName}/index.vue`),
-                name:item["routerName"]+i.toString()
-            };
-
-            home.children.push(data);
-        });
-        arr.push(home);
-        return arr;
-}
+// export function addRouters(data){
+//     let arr = [];
+//         let home= {
+//             path:'/Home',
+//             name:"Home",
+//             component:layout,
+//         }
+//         home.children=[];
+//         let routerLinks = data.filter(item=>item.routerName!='');
+//
+//         routerLinks.forEach((item,i)=>{
+//             let data = {
+//                 path:item.routerName,
+//                 component:()=>import(`@/views/${item.routerName}/index.vue`),
+//                 name:item["routerName"]+i.toString()
+//             };
+//
+//             home.children.push(data);
+//         });
+//         arr.push(home);
+//         return arr;
+// }
 
 //退出登录
 export function unLogin(){

@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import logoImg from './img/logo.png'
+import {unLogin} from "../../util/func";
 
 export default class Header extends Component{
 
@@ -15,7 +16,10 @@ export default class Header extends Component{
     componentDidMount(){
         this.getUser();
     }
-
+    toLogin=()=>{
+        window.location.replace('/login');
+        unLogin();
+    }
     render(){
         return(
             <header>
@@ -30,7 +34,7 @@ export default class Header extends Component{
                     </div>
                     <ul className='avatar-ul'>
                         <li className='avatar-li'>账号设置</li>
-                        <li className='avatar-li'>退出账号</li>
+                        <li className='avatar-li' onClick={this.toLogin}>退出账号</li>
                     </ul>
                 </div>
             </header>

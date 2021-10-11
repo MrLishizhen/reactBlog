@@ -54,7 +54,8 @@ export default class editor extends Component {
                         message.success( '上传成功');
 
                         let url = res.data;
-                        this.imgString = "/api/tmp/" + url;
+                        this.imgString = process.env.REACT_APP_IMAGE_URL+ "/tmp/" + url;
+                        // this.imgString = "/tmp/" + url;
                         success(this.imgString)
                     } else {
                         message.error('上传失败',);
@@ -65,7 +66,7 @@ export default class editor extends Component {
                     failure('')
                 })
             },
-            content_css: process.env.BASE_URL+"/tinymce/skins/content/default/content.css",
+            content_css: process.env.REACT_APP_BASE_URL+"/tinymce/skins/content/default/content.css",
             browser_spellcheck: true, // 拼写检查
             branding: false, // 去水印
             elementpath: false, // 禁用编辑器底部的状态栏

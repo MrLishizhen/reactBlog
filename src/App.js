@@ -10,7 +10,7 @@ import Home from './pages/Home'
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router basename="servere">
         <Switch>
             <Route path='/login' component={Login}></Route>
             <Route path='/home' component={Home}></Route>

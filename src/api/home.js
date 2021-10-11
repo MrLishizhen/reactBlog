@@ -116,3 +116,45 @@ export function setarticle(data){
         GetShow: false
     });
 }
+//获取用户权限表
+export function getUserTabe(data){
+    return Axios({
+        url:'/adminUser/user/getTable',
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        data:data,
+        method:'POST',
+        loading:true,
+        GetShow: false
+    })
+}
+
+//删除用户
+export function removeuser(data){
+    return Axios({
+        url:'/adminUser/user/removeUser',
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        data:data,
+        method:'POST',
+        loading:true,
+        GetShow: false
+    })
+}
+
+//添加用户
+
+export function setuser(data){
+    return Axios({
+        url:'/adminUser/user/addUser',
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        data:data,
+        method:'POST',
+        loading:true,
+        GetShow: false
+    })
+}

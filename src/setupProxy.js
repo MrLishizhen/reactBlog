@@ -8,6 +8,6 @@ module.exports = function(app) {
         pathRewrite: {
         "^/api": "/"
     },
-    // cookieDomainRewrite: "http://localhost:3000"
+    cookieDomainRewrite: "http://localhost:3000"
 }));
 };

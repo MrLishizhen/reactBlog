@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Form, Row, Col, Input, Button, Select, DatePicker, Space, message,Modal,Tooltip} from 'antd';
 import {getTable,deleteTable,setTableHot} from '../../api/home'
-
+import {rTime} from '../../api'
 import './index.css';
 import QyTable from '../../components/Table'
 import {
@@ -76,7 +76,13 @@ export default class Share extends Component {
                 title: '编辑时间',
                 key: 'article_date',
                 dataIndex: 'article_date',
-
+                sorter: (a,b)=>{
+                    //处理时间排序问题
+                    return Date.parse(a.article_date) - Date.parse(b.article_date)
+                },
+                render:(text)=>{
+                    return rTime(text);
+                }
             },
             {
                 title: '点赞数',
@@ -295,7 +301,7 @@ export default class Share extends Component {
                     {/*<QyTable columns={columns} data={data} scrollY={this.state.scrollY}*/}
                     {/*         onChange={this.onChange} pagination={{defaultPageSize:50}}></QyTable>*/}
 
-                    <QyTable columns={this.state.columns} current={this.state.current} data={this.state.tableData} total={this.state.total}
+                    <QyTable columns={this.state.columns} scrollX={1800} current={this.state.current} data={this.state.tableData} total={this.state.total}
                              scrollY={this.state.scrollY} onChange={this.onChange}></QyTable>
                 </div>
             </div>
