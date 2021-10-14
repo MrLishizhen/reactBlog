@@ -37,7 +37,7 @@ function removeLoading(){
 
 //路由请求拦截
 Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-Axios.defaults.baseURL = '/api'
+Axios.defaults.baseURL = process.env.REACT_APP_IMAGE_URL
 // Axios.defaults.headers.post['Authorization'] = cookie.get("userToken");
 Axios.interceptors.request.use(config=>{
     //如果为0则重新创建loading

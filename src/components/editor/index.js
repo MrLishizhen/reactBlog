@@ -36,8 +36,8 @@ export default class editor extends Component {
         editorInit: {
             placeholder: '在这里输入文字...',
             // language_url: zhCN,
-            language_url: process.env.REACT_APP_BASE_URL+'/tinymce/langs/zh_CN.js',
             language: 'zh_CN',
+            language_url: process.env.REACT_APP_BASE_URL+'/tinymce/langs/zh_CN.js',
             skin_url: process.env.REACT_APP_BASE_URL+'/tinymce/skins/ui/oxide',
             // images_upload_url:"/admin_article/addArticle",
             // images_upload_base_path: '/tmp',

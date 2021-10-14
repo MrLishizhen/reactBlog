@@ -7,7 +7,7 @@ export function navChildren(data){
     //拿出一级
     for(let i = 0;i<navData.length;i++){
         let data = {};
-        if(navData[i].fid==0){
+        if(navData[i].fid===0){
             data=navData[i];
             nav.push(data);
         }
@@ -16,7 +16,7 @@ export function navChildren(data){
     //拿出二级
     for(let i = 0;i<navData.length;i++){
         for(let j= 0;j<nav.length;j++){
-            if(nav[j].id==navData[i].fid){
+            if(nav[j].id===navData[i].fid){
                 if(nav[j].children){
                     nav[j].children.push(navData[i]);
                 }else{

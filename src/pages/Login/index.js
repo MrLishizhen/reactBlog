@@ -43,9 +43,13 @@ export default class User extends Component {
     }
 
     componentDidMount() {
+        window.addEventListener('keyup',this.keyUp,false);
         this.codeClick();
     }
-
+    //卸载时
+    componentWillUnmount(){
+        window.removeEventListener('keyup',this.keyUp,false);
+    }
     //处理必填项为空时
     uninitInputStyle = () => {
         const {name, pwd, code} = this.state;
@@ -82,6 +86,16 @@ export default class User extends Component {
         return false;
     }
 
+    keyUp=(e)=>{
+
+        const {name, pwd, code} = this.state;
+        if(e.keyCode===13&&name!==''&&pwd!==''&&code.length===4){
+            this.sumClick();
+        }else{
+            //没有输入完数据回车无效
+            // console.log(123)
+        }
+    }
 
     //处理必填项的样式问题
     initInputStyle = () => {
@@ -178,6 +192,35 @@ export default class User extends Component {
     render() {
         return (
             <div className='login-box'>
+
+                <div className='bg-1'></div>
+                <div className="bg-2"></div>
+
+                {/*<div className="loading">*/}
+
+                {/*    <svg version="1.2" height="84" width="1301" viewport="0 0 1301 1301">*/}
+                {/*        <defs>*/}
+                {/*            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">*/}
+                {/*                <stop offset="0%" style={{'stopColor':'#fff','stopOpacity':1}}/>*/}
+                {/*                <stop offset="40%" style={{"stopColor":"#fff","stopOpacity":"0.5"}}/>*/}
+                {/*                <stop offset="100%" style={{"stopColor":"#fff","stopOpacity":"0"}}/>*/}
+                {/*            </linearGradient>*/}
+                {/*        </defs>*/}
+                {/*        <defs>*/}
+                {/*            <linearGradient x1="0%" y1="0%" x2="100%" y2="0%" id="grad2">*/}
+                {/*                <stop offset="0%" style={{"stopColor":"#fff","stopOpacity":"0"}}/>*/}
+                {/*                <stop offset="40%" style={{"stopColor":"#fff","stopOpacity":"0.5"}}/>*/}
+                {/*                <stop offset="100%" style={{'stopColor':'#fff','stopOpacity':1}}/>*/}
+                {/*            </linearGradient>*/}
+                {/*        </defs>*/}
+
+
+                {/*        <path id="pulsarRight" stroke="url(#grad1)" fill="none" strokeWidth="2" strokeLinejoin="round"*/}
+                {/*              d="M655,66 L655,66 L591,66 L576,81 L322,81 L301,62 L66,62 L5,0"/>*/}
+                {/*        <path id="pulsarLeft" stroke="url(#grad2)" fill="none" strokeWidth="2" strokeLinejoin="round"*/}
+                {/*              d="M655,66 L655,66 L711,66 L726,81 L980,81 L1002,62 L1237,62 L1300,0"/>*/}
+                {/*    </svg>*/}
+                {/*</div>*/}
                 <div className='login'>
                     <h2>博客后台管理系统</h2>
                     <div>
@@ -196,7 +239,7 @@ export default class User extends Component {
                         </Inputs>
 
                         <div className='btn-s'>
-                            <button className='sum-btn' onClick={this.sumClick}>登录</button>
+                            <button className='sum-btn' onKeyUp={this.keyUp} onClick={this.sumClick}>登录</button>
                         </div>
                     </div>
                 </div>
