@@ -2,10 +2,65 @@
     display:flex;
     flex-direction: column;
 }
-.ant-advanced-search-form{
-    height:112px;
+.addArticle-box .ant-advanced-search-form{
+    height:168px;
     flex-shrink: 0;
+}
+.ant-btn{
+    margin-right:20px;
+}
+.ant-form-item{
+    min-width:200px;
 }
 .editor-box{
     flex-grow: 1;
+}
+
+.cropper-box{
+    width: 100%;
+    height:500px;
+    display:flex;
+
+}
+.cropper-left{
+    width:600px;
+    height:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.cropper-right{
+    width:400px;
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+}
+.cropper-zs{
+    overflow:hidden;
+    width:218px;
+    height:144px;
+    background-color: #e0e0e0;
+}
+.btns{
+    width:100%;
+    height:70px;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.preview-com{
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.preview-img{
+    width:436px;
+    height:288px;
 }

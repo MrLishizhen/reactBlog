@@ -256,16 +256,14 @@ export default class Share extends Component {
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col span={1}>
-                            <Form.Item>
+                        <Col span={6}>
+
                                 <Button type="primary" htmlType="submit">搜索</Button>
-                            </Form.Item>
-                        </Col>
-                        <Col span={1}>
-                            <Form.Item>
                                 <Button type="primary" onClick={this.addUser}>添加</Button>
-                            </Form.Item>
+
+
                         </Col>
+
                     </Row>
                 </Form>
                 <div className={'user'} ref={'tableBox'}>

@@ -166,7 +166,7 @@ export default class Share extends Component {
 
                     }
                     return (
-                        <Space size="middle">
+                        <Space size="middle" align={'center'}>
                             {showI(text.article_is,text)}
                             <Tooltip title={'修改文章'}> <EditTwoTone onClick={()=>editClick(text.article_id)} /></Tooltip>
                             <Tooltip title={'删除文章'}><DeleteTwoTone onClick={()=>deleteClick(text.article_id,text)}/></Tooltip>

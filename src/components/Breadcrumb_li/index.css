@@ -1,0 +1,12 @@
+.breadcrumb-li-box{
+    height:100%;
+    display:flex;
+    align-items: center;
+    margin-left:112px;
+}
+.breadcrumb-li-item{
+    color:#fff;
+}
+.ant-breadcrumb-separator{
+    color:#fff;
+}

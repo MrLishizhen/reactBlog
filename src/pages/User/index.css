@@ -3,7 +3,7 @@
     flex-direction: column;
 }
 .ant-advanced-search-form{
-    /*height:56px;*/
+    height:56px;
     flex-shrink: 0;
 }
 .user{

@@ -11,8 +11,9 @@ export default withRouter(class Sider extends Component {
         defaultOpenKeys: [],//默认展开的分类
 
     };
-    handleClick = e => {
-        const routerLink = e.key;
+    handleClick = (option) => {
+
+        const routerLink = option.key;
         this.props.history.push(`/home/${routerLink}`);
     };
 

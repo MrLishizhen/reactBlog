@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import logoImg from './img/logo.png'
 import {unLogin} from "../../util/func";
-
+import BreadcrumbLi from '../Breadcrumb_li/index'
 export default class Header extends Component{
 
     state = {
@@ -26,7 +26,11 @@ export default class Header extends Component{
                 <div className='logo'>
                     <img src={logoImg} alt="logo"/>
                 </div>
-                <div className='breadcrumb'></div>
+                <div className='breadcrumb'>
+
+                    {/*顶部面包屑*/}
+                    {/*<BreadcrumbLi></BreadcrumbLi>*/}
+                </div>
                 <div className='avatar-box'>
                     <div className='avatar-user'>
                         <span className='avatar'></span>

@@ -3,7 +3,7 @@ import '../Home/index.css'
 import Headers from '../../components/LayoutHeader'
 import Menu from '../../components/menu'
 import {Route, Switch} from 'react-router-dom';
-
+import {nav} from '../../api/home'
 //引入路由所对应的组件
 
 import share from '../Share';
@@ -14,8 +14,19 @@ import imgAdministration from '../ImgAdministration';
 import user from '../User';
 import empty from '../404'
 
+// const ThemeContext = React.createContext({
+//     permissions:[]
+// });
+
 export default class Home extends Component {
 
+    componentDidMount() {
+        //初始化获取数据
+        nav().then(res=>{
+            console.log(1);
+            console.log(res);
+        })
+    }
     render() {
         const {history} = this.props;
 
