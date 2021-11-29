@@ -11,7 +11,8 @@ import qs from 'qs';
 
 
 import {createTimestamp} from '../api'
-
+const CancelToken = Axios.CancelToken;
+const source = CancelToken.source();
 let loadingInstance = false; // loading实例是否存在
 let needLoadingRequestCount = 0; //当前正在请求的数量
 
@@ -42,7 +43,7 @@ Axios.defaults.baseURL = process.env.REACT_APP_IMAGE_URL
 Axios.interceptors.request.use(config=>{
     //如果为0则重新创建loading
     //get请求添加时间戳
-
+    config.cancelToken = source.token;
     if(config.method==='get'&&config.GetShow){
         config.url = config.url+"?"+createTimestamp();
     }else if(config.method==='POST'){
@@ -77,7 +78,7 @@ Axios.interceptors.response.use(response=>{
         // console.log(loadingInstance,123);
 
         //计数减少
-        if(response.config.loading){
+        if(response?.config.loading){
             needLoadingRequestCount--;
             //判断needLoadingRequestCount的数值
             needLoadingRequestCount = needLoadingRequestCount<0?0:needLoadingRequestCount;
@@ -89,6 +90,7 @@ Axios.interceptors.response.use(response=>{
         if(response.data.status===401){
             // console.log(1);
             needLoadingRequestCount=0;
+            source.cancel();
             // response.data.message='权限验证失败，请重新登录'
             message.error('登录失效，请重新登录');
 
@@ -99,7 +101,7 @@ Axios.interceptors.response.use(response=>{
                 cookie.remove('userToken');
                 //判断是不是在登录页登录失败
                 if(window.location.pathname!=='/login'){
-                    window.location.replace('/login');
+                    window.location.replace('/servere/login');
                 }
 
             },1000)
@@ -114,15 +116,19 @@ Axios.interceptors.response.use(response=>{
 
     },
     error=>{
+        if (Axios.isCancel(error)) { // 取消请求的情况下，终端Promise调用链
+            return new Promise(() => {});
+        } else {
+            if (loadingInstance) {
+                needLoadingRequestCount--;
+                needLoadingRequestCount = needLoadingRequestCount < 0 ? 0 : needLoadingRequestCount;
+                needLoadingRequestCount === 0 && loadingInstance && removeLoading(); //关闭加载动画
+            }
 
-        if (loadingInstance) {
-            needLoadingRequestCount--;
-            needLoadingRequestCount = needLoadingRequestCount < 0 ? 0 : needLoadingRequestCount;
-            needLoadingRequestCount === 0 && loadingInstance && removeLoading(); //关闭加载动画
+            message.error('请求数据失败');
+            return Promise.reject(error.response);
         }
 
-        message.error('请求数据失败');
-        return Promise.reject(error.response);
     })
 
 export default  Axios;

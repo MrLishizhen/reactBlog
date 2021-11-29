@@ -113,7 +113,7 @@ export function deepClones(target) {
 
 //退出登录
 export function unLogin(){
-    cookie.remove("user");
+    sessionStorage.removeItem("user");
     cookie.remove("userToken");
 
 }

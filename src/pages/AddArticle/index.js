@@ -437,7 +437,7 @@ export default class Share extends Component {
                                         disabled={this.state.imgs.filesImg === '' ? true : false} onClick={this.modelClick}>预览封面</Button>
                             </Form.Item>
                         </Col>
-                        <Col span={4}>
+                        <Col span={2}>
                             <Form.Item>
                                 <Button type="dashed" htmlType="submit">上传</Button>
                             </Form.Item>

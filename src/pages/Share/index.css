@@ -3,7 +3,7 @@
     display:flex;
     flex-direction: column;
 }
-.ant-advanced-search-form{
+.share-box .ant-advanced-search-form{
     height:112px;
     flex-shrink: 0;
 }

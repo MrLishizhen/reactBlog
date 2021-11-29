@@ -9,6 +9,10 @@ export default class Header extends Component{
     }
     getUser=()=>{
         const user = JSON.parse(sessionStorage.getItem('user'));
+        if(!user){
+            this.toLogin();
+            return;
+        }
         this.setState({
             userName:user.name
         })
@@ -17,8 +21,9 @@ export default class Header extends Component{
         this.getUser();
     }
     toLogin=()=>{
-        window.location.replace('/login');
         unLogin();
+        window.location.replace('/servere/login');
+
     }
     render(){
         return(
@@ -29,7 +34,7 @@ export default class Header extends Component{
                 <div className='breadcrumb'>
 
                     {/*顶部面包屑*/}
-                    {/*<BreadcrumbLi></BreadcrumbLi>*/}
+                    <BreadcrumbLi data={this.props.data}></BreadcrumbLi>
                 </div>
                 <div className='avatar-box'>
                     <div className='avatar-user'>

@@ -1,10 +1,7 @@
 import { Breadcrumb } from 'antd';
 import './index.css';
 export default function BreadcrumbLi(props){
-        const data = [
-            '文章管理',
-            '技术分享'
-        ]
+        const {data} = props;
         return(
             <div className={'breadcrumb-li-box'}>
                 <Breadcrumb>

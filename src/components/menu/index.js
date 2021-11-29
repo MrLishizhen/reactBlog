@@ -5,18 +5,42 @@ import {withRouter} from 'react-router-dom';
 const {SubMenu} = Menu;
 
 
+
 export default withRouter(class Sider extends Component {
+
+
     state = {
         navData: [],
         defaultOpenKeys: [],//默认展开的分类
-
+        navarr:[
+            {key:'sub1',title:'文章管理'},
+            {key:'share',title:'技术分享'},
+            {key:'years',title:'岁月年华'},
+            {key:'addArticle',title:'添加文章'},
+            {key:'sub2',title:'网站管理'},
+            {key:'navAdministration',title:'导航管理'},
+            {key:'imgAdministration',title:'轮播图管理'},
+            {key:'sub3',title:'用户管理'},
+            {key:'user',title:'用户列表'},
+            {key:'userRole',title:'用户权限'},
+        ],
+        defaultNav:[]
     };
     handleClick = (option) => {
+        let {onChange} = this.props;
 
+        onChange(this.getNav(option.keyPath).reverse());
         const routerLink = option.key;
         this.props.history.push(`/home/${routerLink}`);
     };
-
+    getNav=(arr)=>{
+        let data = [];
+        for(let i = 0;i<arr.length;i++){
+            let datas = this.state.navarr.find(item=>item.key === arr[i]).title;
+            data.push(datas);
+        }
+        return data;
+    }
     componentDidMount() {
         // nav().then(res=>{
         //     if(res.status===200&&res.data.length>0){
@@ -25,16 +49,7 @@ export default withRouter(class Sider extends Component {
         //         message.error('出现未知错误，请返回登录页。');
         //     }
         // });
-
-    }
-
-    createMenu = () => {
-        // const {navData} = this.state;
-
-
-    }
-
-    render() {
+        let {onChange} = this.props;
         let pathUrl = this.props.history.location.pathname;
         let defaultOpenKeys = ['sub1'];
         pathUrl = pathUrl.replace('/home/', '');
@@ -48,6 +63,7 @@ export default withRouter(class Sider extends Component {
             case 'imgAdministration':
                 defaultOpenKeys=['sub2'];
                 break;
+            case 'userRole' :
             case 'user':
                 defaultOpenKeys=['sub3'];
                 break;
@@ -55,6 +71,40 @@ export default withRouter(class Sider extends Component {
                 defaultOpenKeys=['sub1'];
 
         }
+        onChange(this.getNav([pathUrl,...defaultOpenKeys].reverse()));
+    }
+
+    createMenu = () => {
+        // const {navData} = this.state;
+
+
+    }
+
+    render() {
+
+        let pathUrl = this.props.history.location.pathname;
+        let defaultOpenKeys = ['sub1'];
+        pathUrl = pathUrl.replace('/home/', '');
+        switch (pathUrl) {
+            case 'share':
+            case 'years':
+            case 'addArticle':
+                defaultOpenKeys=['sub1'];
+                break;
+            case 'navAdministration':
+            case 'imgAdministration':
+                defaultOpenKeys=['sub2'];
+                break;
+            case 'userRole' :
+            case 'user':
+                defaultOpenKeys=['sub3'];
+                break;
+            default :
+                defaultOpenKeys=['sub1'];
+
+        }
+
+
         return (
             <Menu
                 onClick={this.handleClick}
@@ -93,6 +143,10 @@ export default withRouter(class Sider extends Component {
                     <Menu.Item key="user">
                         {/*<Link to={'/home/user'}>用户列表</Link>*/}
                         用户列表
+                    </Menu.Item>
+                    <Menu.Item key="userRole">
+                        {/*<Link to={'/home/user'}>用户列表</Link>*/}
+                        后台权限
                     </Menu.Item>
                 </SubMenu>
             </Menu>

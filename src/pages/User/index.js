@@ -2,17 +2,20 @@ import React, {Component} from "react";
 import {Button, Col, Form, Input, message, Modal, Row, Select, Space, Tooltip} from "antd";
 import './index.css'
 import {rTime} from "../../api";
-import {getUserTabe, removeuser,setuser} from "../../api/home";
+import {getUserTabe, removeuser, setuser,updateUser} from "../../api/home";
 import QyTable from '../../components/Table';
 import {
     DeleteTwoTone,
-    ExclamationCircleOutlined
+    ExclamationCircleOutlined,
+    EditTwoTone
 } from "@ant-design/icons";
+import {unLogin} from "../../util/func";
 
 export default class Share extends Component {
     state = {
-        isModalVisible:false,
+        isModalVisible: false,
         total: 0,
+        title:'添加账户',
         current: 1,
         tableData: [],
         scrollY: 0,
@@ -43,13 +46,13 @@ export default class Share extends Component {
             {
                 title: '管理员名称',
                 key: 'name',
-                width:400,
+                width: 400,
                 dataIndex: 'name',
             },
             {
                 title: '管理员级别',
                 key: 'userjb',
-                width:400,
+                width: 400,
                 dataIndex: 'userjb',
                 render: (text) => {
                     if (text === 1) {
@@ -101,22 +104,43 @@ export default class Share extends Component {
             content: (<p>确认删除管理员 《<span style={{color: '#faad14'}}>{text.name}</span> 》 吗？删除后不可以恢复的哟！</p>),
             okText: '确认',
             cancelText: '取消',
-            onCancel: this.hideModal,
+            // onCancel: this.hideModalDelect,
             onOk: () => {
                 this.okModel(id);
             }
         });
 
     }
-
+    //修改管理员账号
+    updateAdmin = (id,obj) => {
+        this.setState({
+            title:'修改账户',
+            isModalVisible: !this.state.isModalVisible,
+            searchForm:{
+                ...obj
+            }
+        },()=>{
+            this.refs.form.setFieldsValue({
+                name:obj.name
+            })
+        })
+        console.log(id,obj);
+    }
     buttonShow = (text) => {
         const user = JSON.parse(sessionStorage.getItem('user'));
         //管理员自身和超级管理员不能被删除
-        if (text.userjb === 1 || user.id === text.id) {
-            return '';
-        } else if (text.userjb === 2) {
-            return <Tooltip title={'删除管理员'}><DeleteTwoTone
-                onClick={() => this.deleteClick(text.id, text)}/></Tooltip>
+        if (text.userjb === 1&&user.id === text.id) {
+            return <Tooltip title={'修改管理员'}><EditTwoTone onClick={()=>this.updateAdmin(text.id, text)}/></Tooltip>;
+        //管理员自身只能修改自身  不能删除
+        }else if(user.id === text.id){
+            return <Tooltip title={'修改管理员'}><EditTwoTone onClick={()=>this.updateAdmin(text.id, text)}/></Tooltip>
+        //超级管理员可以修改删除下级管理员
+        } else if (text.userjb === 2&&user.id === 1) {
+            return (
+                <>
+                    <Tooltip title={'删除管理员'}><DeleteTwoTone onClick={() => this.deleteClick(text.id, text)}/></Tooltip>
+                    <Tooltip title={'修改管理员'}><EditTwoTone onClick={()=>this.updateAdmin(text.id, text)}/></Tooltip>
+                </>)
         }
     }
 
@@ -142,51 +166,69 @@ export default class Share extends Component {
     }
 
     componentDidMount() {
+
+
         //初始化表格高度
         this.initTableHeight();
 
-        const user = JSON.parse(sessionStorage.getItem('user'));
-        if (user.id === 1) {
-            this.setState({
-                columns: [...this.state.columns,{
-                        title: '操作',
-                        key: 'action',
-                        width: 130,
-                        render: (text, record) => {
+        // const user = JSON.parse(sessionStorage.getItem('user'));
 
-                            return (
-                                <Space size="middle">
-                                    {/*{showI(text.article_is,text)}*/}
-                                    {/*<Tooltip title={'修改文章'}> <EditTwoTone onClick={()=>editClick(text.article_id)} /></Tooltip>*/}
-                                    {this.buttonShow(text)}
-                                </Space>
-                            )
-                        }
-                    }
-                ]
-            })
-        }
+        this.setState({
+            columns: [...this.state.columns, {
+                title: '操作',
+                key: 'action',
+                width: 130,
+                render: (text, record) => {
+
+                    return (
+                        <Space size="middle">
+                            {/*{showI(text.article_is,text)}*/}
+                            {/*<Tooltip title={'修改文章'}> <EditTwoTone onClick={()=>editClick(text.article_id)} /></Tooltip>*/}
+                            {this.buttonShow(text)}
+                        </Space>
+                    )
+                }
+            }
+            ]
+        })
+
         this.getData(this.state.searchForm);
 
     }
 
 
-    addUser=()=>{
+    addUser = () => {
         this.setState({
-            isModalVisible:!this.state.isModalVisible
+            title:'添加账户',
+            isModalVisible: !this.state.isModalVisible
         })
     }
 
-    getForm=(values)=>{
-        setuser(values).then(res=>{
-            if(res.status===200){
-                message.success('添加成功');
-                this.getData(this.state.searchForm);
-                this.addUser();
-            }else{
-                message.error(res.message);
-            }
-        })
+    getForm = (values) => {
+        console.log(this.state.title);
+        if(this.state.title==='添加账户'){
+
+            setuser(values).then(res => {
+                if (res.status === 200) {
+                    message.success('添加成功');
+                    this.getData(this.state.searchForm);
+                    this.addUser();
+                } else {
+                    message.error(res.message);
+                }
+            })
+        }else{
+            updateUser({...values,id:this.state.searchForm.id}).then(res => {
+                if (res.status === 200) {
+                    message.success('修改成功,请重新登录');
+                    unLogin();
+                    this.props.history.replace('/servere/login');
+                } else {
+                    message.error(res.message);
+                }
+            })
+        }
+
     }
     //初始化表格高度
     initTableHeight = () => {
@@ -232,6 +274,7 @@ export default class Share extends Component {
                     initialValues={{
                         remember: true,
                     }}
+
                     autoComplete="off"
                     onFinish={this.onFinish}
                     onFinishFailed={this.onFinishFailed}
@@ -258,8 +301,8 @@ export default class Share extends Component {
                         </Col>
                         <Col span={6}>
 
-                                <Button type="primary" htmlType="submit">搜索</Button>
-                                <Button type="primary" onClick={this.addUser}>添加</Button>
+                            <Button type="primary" htmlType="submit">搜索</Button>
+                            <Button type="primary" onClick={this.addUser}>添加</Button>
 
 
                         </Col>
@@ -272,9 +315,10 @@ export default class Share extends Component {
                              scrollY={this.state.scrollY} onChange={this.onChange}></QyTable>
                 </div>
 
-                <Modal title="添加账户" footer={null} visible={this.state.isModalVisible}  onCancel={this.hideModal}>
+                <Modal title={this.state.title} footer={null} visible={this.state.isModalVisible} onCancel={this.hideModal}>
                     <Form
                         autoComplete="off"
+                        ref={'form'}
                         onFinish={this.getForm}
                         name="advanced_search"
                         className=""
@@ -293,7 +337,7 @@ export default class Share extends Component {
 
                         </Row>
 
-                        <Row gutter={24} style={{justifyContent:'end'}}>
+                        <Row gutter={24} style={{justifyContent: 'end'}}>
                             <Col span={5}>
                                 <Form.Item>
                                     <Button onClick={this.addUser}>取消</Button>
@@ -301,7 +345,7 @@ export default class Share extends Component {
                             </Col>
                             <Col span={5}>
                                 <Form.Item>
-                                    <Button type="primary" htmlType="submit">添加</Button>
+                                    <Button type="primary" htmlType="submit">{this.state.title}</Button>
                                 </Form.Item>
                             </Col>
 

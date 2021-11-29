@@ -60,6 +60,7 @@ main{
     overflow:hidden;
     box-shadow: 5px 5px 5px silver;
     padding:5px;
+    z-index:100000;
 }
 .avatar-li{
     height:32px;

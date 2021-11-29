@@ -158,5 +158,33 @@ export function setuser(data){
         GetShow: false
     })
 }
+//修改用户
 
+export function updateUser(data){
+    return Axios({
+        url:'/adminUser/user/updateUser',
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        data:data,
+        method:'POST',
+        loading:true,
+        GetShow: false
+    })
+}
+
+//用户权限
+
+export function rolePermissions(data){
+    return Axios({
+        url:'/adminUser//user/rolePermissions',
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        data:data,
+        method:'POST',
+        loading:true,
+        GetShow: false
+    })
+}
 
