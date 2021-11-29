@@ -1,7 +1,7 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect} from 'react';
 // import { Table} from 'antd';
 import Table from '../../components/Table/index'
-import {rolePermissions} from "../../api/home";
+import {getAllRole} from "../../api/home";
 
 const columns = [
     {
@@ -94,15 +94,17 @@ export default function UserRole() {
     // 声明一个新的叫做 “count” 的 state 变量
     // const [count, setCount] = useState(0);
 
-    useLayoutEffect(()=>{
+    useEffect(()=>{
 
-        rolePermissions({id:1});
+        getAllRole({id:2}).then(res=>{
+            console.log(res);
+        });
     })
     return (
         <div>
             <Table
                 columns={columns}
-                dataSource={data}
+                data={data}
             />
         </div>
     );

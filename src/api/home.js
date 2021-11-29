@@ -177,7 +177,7 @@ export function updateUser(data){
 
 export function rolePermissions(data){
     return Axios({
-        url:'/adminUser//user/rolePermissions',
+        url:'/adminUser/user/rolePermissions',
         headers:{
             Authorization:cookie.get("userToken")
         },
@@ -187,4 +187,16 @@ export function rolePermissions(data){
         GetShow: false
     })
 }
-
+//超级管理员权限
+export function getAllRole(data){
+    return Axios({
+        url:'/adminUser/user/getAllRole',
+        headers:{
+            Authorization:cookie.get("userToken")
+        },
+        data:data,
+        method:'POST',
+        loading:true,
+        GetShow: false
+    })
+}
