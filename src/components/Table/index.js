@@ -41,12 +41,12 @@ export default class QyTable extends Component {
 
 
     render() {
-        const {columns, data, pagination, scrollY,scrollX} = this.props;
+        const {columns, data, pagination, scrollY,scrollX,defaultExpandAllRows,indentSize,} = this.props;
 
         let TabDom;
         if (pagination) {
             TabDom = (<div className={'table-top'}>
-                <Table bordered columns={columns || []} scroll={{x: true, y: scrollY }}
+                <Table indentSize={indentSize||15} defaultExpandAllRows={defaultExpandAllRows||false} bordered columns={columns || []} scroll={{x: true, y: scrollY }}
                        pagination={pagination || false} dataSource={data || []}/>
             </div>)
 
@@ -54,7 +54,7 @@ export default class QyTable extends Component {
             TabDom = (
                 <>
                     <div className={'table-top'}>
-                        <Table bordered columns={columns || []}  scroll={{x: scrollX||true, y: scrollY}}
+                        <Table indentSize={indentSize||15} defaultExpandAllRows={defaultExpandAllRows||false} bordered columns={columns || []}  scroll={{x: scrollX||true, y: scrollY}}
                                pagination={pagination || false} dataSource={data || []}/>
                     </div>
                     <div className={'table-pagination'}>

@@ -215,6 +215,7 @@ export default class Share extends Component {
     }
     onFinish = (values) => {
         const user = JSON.parse(sessionStorage.getItem('user'));
+
         let formData = {};
         if (this.state.isEdit) {
             formData = {

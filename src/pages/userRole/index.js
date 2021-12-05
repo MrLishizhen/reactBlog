@@ -1,109 +1,123 @@
-import React, {useLayoutEffect} from 'react';
-// import { Table} from 'antd';
-import Table from '../../components/Table/index'
-import {rolePermissions} from "../../api/home";
-
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-        width: '12%',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-        width: '30%',
-        key: 'address',
-    },
-];
-
-const data = [
-    {
-        key: 1,
-        name: 'John Brown sr.',
-        age: 60,
-        address: 'New York No. 1 Lake Park',
-        children: [
-            {
-                key: 11,
-                name: 'John Brown',
-                age: 42,
-                address: 'New York No. 2 Lake Park',
-            },
-            {
-                key: 12,
-                name: 'John Brown jr.',
-                age: 30,
-                address: 'New York No. 3 Lake Park',
-                children: [
-                    {
-                        key: 121,
-                        name: 'Jimmy Brown',
-                        age: 16,
-                        address: 'New York No. 3 Lake Park',
-                    },
-                ],
-            },
-            {
-                key: 13,
-                name: 'Jim Green sr.',
-                age: 72,
-                address: 'London No. 1 Lake Park',
-                children: [
-                    {
-                        key: 131,
-                        name: 'Jim Green',
-                        age: 42,
-                        address: 'London No. 2 Lake Park',
-                        children: [
-                            {
-                                key: 1311,
-                                name: 'Jim Green jr.',
-                                age: 25,
-                                address: 'London No. 3 Lake Park',
-                            },
-                            {
-                                key: 1312,
-                                name: 'Jimmy Green sr.',
-                                age: 18,
-                                address: 'London No. 4 Lake Park',
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        key: 2,
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-    },
-];
-
+import React, {useEffect, useState} from 'react';
+import {Tooltip, Space,Button,Modal} from 'antd';
+import QyTable from '../../components/Table/index'
+import {deepClones, menuArr} from '../../util/func'
+import {getAllRole} from "../../api/home";
+import './index.css'
+import {DeleteTwoTone, EditTwoTone,PlusCircleTwoTone} from "@ant-design/icons";
 
 
 export default function UserRole() {
     // 声明一个新的叫做 “count” 的 state 变量
     // const [count, setCount] = useState(0);
+    const user = JSON.parse(sessionStorage.getItem('user'));
 
-    useLayoutEffect(()=>{
+    let title = '权限管理';
+    const [visible,setVisible] = useState(true)
+    const [columns] = useState([
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Icon',
+            dataIndex: 'icon',
+            key: 'icon',
+            width: '12%',
+        },
+        {
+            title: 'RouterName',
+            dataIndex: 'routerName',
+            width: '30%',
+            key: 'routerName',
+        },
+        {
+            title: 'RouterUrl',
+            dataIndex: 'routerUrl',
+            width: '30%',
+            key: 'index'
+        },
+        {
+            title: '操作',
+            key: 'action',
+            width: 130,
+            render: (text, record) => {
+                return (
+                    <Space size="middle" style={{'paddingLeft': (text.index)*10+'px'}}>
+                        <Tooltip title={'删除'}><DeleteTwoTone onClick={()=>deleteMenu(text)}/></Tooltip>
+                        <Tooltip title={'修改'}><EditTwoTone onClick={()=>updateMenu(text)}/></Tooltip>
+                        <Tooltip title={'添加'}><PlusCircleTwoTone onClick={()=>addMenu()}/></Tooltip>
+                    </Space>
+                )
+            }
+        }
+    ]);
+    const [data, setData] = useState([]);
+    const [defaultData,setDefaultData] = useState([]);
+    useEffect(() => {
 
-        rolePermissions({id:1});
-    })
+        let getRole = async () => {
+            const result = await getAllRole({id: user.id});
+
+            if (result.status === 200) {
+                result.data.map((item, i) => {
+                    return item.key = i.toString();
+                })
+                //深拷贝数组
+                const data = deepClones(result.data);
+
+                //用于前端验证是否存在子级，有子级不让删
+                setDefaultData([...result.data]);
+                setData(menuArr(data));
+            }
+        }
+        getRole();
+    }, [])
+    //删除
+    const deleteMenu=(text)=>{
+        console.log(text);
+    }
+    //修改
+    const updateMenu = (text)=>{
+        console.log('修改');
+    }
+
+    //添加
+    const addMenu = ()=>{
+
+    }
+
+    //点击确认
+    const handleOk = ()=>{
+        setVisible(false);
+    }
+    //取消
+    const handleCancel =()=>{
+        setVisible(false);
+    }
+    //触发弹窗
+    const clickMenu = (index)=>{
+        if(index===0){
+            //表示一级添加
+            setVisible(true);
+        }
+    }
     return (
-        <div>
-            <Table
-                columns={columns}
-                dataSource={data}
-            />
+        <div className={'userRole'}>
+            <div className={'userRole-top'}>
+                <Button type="primary" onClick={()=>clickMenu(0)}>添加一级菜单</Button>
+            </div>
+            <div className={'userRole-bom'}>
+                <QyTable
+                    columns={columns}
+                    data={data}
+                />
+            </div>
+            <Modal title={title} visible={visible} onOk={handleOk} onCancel={handleCancel}></Modal>
+
+
+
         </div>
     );
 }

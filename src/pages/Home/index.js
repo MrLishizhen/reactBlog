@@ -15,15 +15,14 @@ import user from '../User';
 import userRole from '../userRole';
 import empty from '../404'
 
-// const ThemeContext = React.createContext({
-//     permissions:[]
-// });
+import {Provider} from '../../context/global';
 
 export default class Home extends Component {
 
     state = {
-        breadcrumb:[]
+        breadcrumb: []
     }
+
     componentDidMount() {
         //初始化获取数据
         nav().then(res => {
@@ -31,44 +30,45 @@ export default class Home extends Component {
             console.log(res);
         })
     }
+
     //顶部导航栏
     onChangeBreadcrumb = (data) => {
 
         this.setState({
-            breadcrumb:[...data]
+            breadcrumb: [...data]
         })
 
     }
 
     render() {
         const {history} = this.props;
-
+        console.log(this.context);
         return (
-
-            <div className='home-box'>
-                {/*顶部导航栏*/}
-                <Headers data={this.state.breadcrumb}></Headers>
-                <main>
-                    {/*左侧导航栏*/}
-                    <div className='leftMenu'>
-                        <Menu width='200' history={history} onChange={(val)=>this.onChangeBreadcrumb(val)}></Menu>
-                    </div>
-                    {/*右侧内容区*/}
-                    <div className='rightMain'>
-                        <Switch>
-                            <Route path='/home/share' component={share}></Route>
-                            <Route path='/home/years' component={years}></Route>
-                            <Route path='/home/addArticle' component={addArticle}></Route>
-                            <Route path='/home/navAdministration' component={navAdministration}></Route>
-                            <Route path='/home/imgAdministration' component={imgAdministration}></Route>
-                            <Route path='/home/user' component={user}></Route>
-                            <Route path='/home/userRole' component={userRole}></Route>
-                            <Route path='*' component={empty}></Route>
-                        </Switch>
-                    </div>
-                </main>
-            </div>
-
+            <Provider value={{}}>
+                <div className='home-box'>
+                    {/*顶部导航栏*/}
+                    <Headers data={this.state.breadcrumb}></Headers>
+                    <main>
+                        {/*左侧导航栏*/}
+                        <div className='leftMenu'>
+                            <Menu width='200' history={history} onChange={(val) => this.onChangeBreadcrumb(val)}></Menu>
+                        </div>
+                        {/*右侧内容区*/}
+                        <div className='rightMain'>
+                            <Switch>
+                                <Route path='/home/share' component={share}></Route>
+                                <Route path='/home/years' component={years}></Route>
+                                <Route path='/home/addArticle' component={addArticle}></Route>
+                                <Route path='/home/navAdministration' component={navAdministration}></Route>
+                                <Route path='/home/imgAdministration' component={imgAdministration}></Route>
+                                <Route path='/home/user' component={user}></Route>
+                                <Route path='/home/userRole' component={userRole}></Route>
+                                <Route path='*' component={empty}></Route>
+                            </Switch>
+                        </div>
+                    </main>
+                </div>
+            </Provider>
         )
     }
 }

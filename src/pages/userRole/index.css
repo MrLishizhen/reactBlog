@@ -1,0 +1,14 @@
+div.userRole{
+    width:100%;
+    height:100%;
+    overflow-y:auto;
+    display:flex;
+    flex-direction: column;
+}
+.userRole-top{
+    height:60px;
+    flex-shrink: 0;
+}
+.userRole-bom{
+    flex-grow: 1;
+}
