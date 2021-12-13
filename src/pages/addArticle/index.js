@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import {Button, Col, Form, Upload, Input, Row, Select, message, Modal} from "antd";
 import {UploadOutlined} from '@ant-design/icons';
 
-import '../AddArticle/index.css'
+import './/index.css'
 import {addarticle, getDefault, setarticle, uploadImge} from '../../api/home'
 //引入tinymce
 import tinymce from "tinymce";

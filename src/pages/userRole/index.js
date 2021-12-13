@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState,useContext} from 'react';
 import {Tooltip, Space,Button,Modal} from 'antd';
 import QyTable from '../../components/Table/index'
 import {deepClones, menuArr} from '../../util/func'
 import {getAllRole} from "../../api/home";
 import './index.css'
+import {globalContext} from '../../context/global'
 import {DeleteTwoTone, EditTwoTone,PlusCircleTwoTone} from "@ant-design/icons";
 
 
 export default function UserRole() {
     // 声明一个新的叫做 “count” 的 state 变量
     // const [count, setCount] = useState(0);
-    const user = JSON.parse(sessionStorage.getItem('user'));
+
 
     let title = '权限管理';
     const [visible,setVisible] = useState(true)
@@ -55,6 +56,8 @@ export default function UserRole() {
     ]);
     const [data, setData] = useState([]);
     const [defaultData,setDefaultData] = useState([]);
+    console.log(defaultData)
+    const user = useContext(globalContext).user;
     useEffect(() => {
 
         let getRole = async () => {
@@ -73,7 +76,7 @@ export default function UserRole() {
             }
         }
         getRole();
-    }, [])
+    }, [user])
     //删除
     const deleteMenu=(text)=>{
         console.log(text);
@@ -106,7 +109,7 @@ export default function UserRole() {
     return (
         <div className={'userRole'}>
             <div className={'userRole-top'}>
-                <Button type="primary" onClick={()=>clickMenu(0)}>添加一级菜单</Button>
+                <Button type="primary" onClick={()=>{clickMenu(0)}}>添加一级菜单</Button>
             </div>
             <div className={'userRole-bom'}>
                 <QyTable

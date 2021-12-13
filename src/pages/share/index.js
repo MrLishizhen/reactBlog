@@ -240,7 +240,6 @@ export default class Share extends Component {
     }
 
     render() {
-
         return (
             <div className={'share-box'}>
                 <Form

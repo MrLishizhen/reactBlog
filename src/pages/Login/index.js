@@ -163,7 +163,7 @@ export default class User extends Component {
                         sessionStorage.setItem('user', JSON.stringify(res.data));
                         this.props.history.replace(`/home/share`);
                     } else {
-                        this.props.history.replace('/login');
+                        this.props.history.replace('/servere/login');
                     }
                 });
 

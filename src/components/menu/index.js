@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Menu} from 'antd';
 // import {nav} from '../../api/home';
 import {withRouter} from 'react-router-dom';
+import {nav} from "../../api/home";
 const {SubMenu} = Menu;
 
 
@@ -42,6 +43,13 @@ export default withRouter(class Sider extends Component {
         return data;
     }
     componentDidMount() {
+
+        //初始化获取数据
+        nav().then(res => {
+            // this.setState({
+            //     navarr:res.data,
+            // })
+        })
         // nav().then(res=>{
         //     if(res.status===200&&res.data.length>0){
         //         this.setState({navData:res.data});
